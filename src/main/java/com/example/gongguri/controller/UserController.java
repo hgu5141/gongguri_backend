@@ -30,7 +30,7 @@ public class UserController {
 
 
     // 회원 로그인 페이지
-    @GetMapping("/user/login")
+    @GetMapping("/user/loginView")
     public String login(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         if (userDetails == null) {
             model.addAttribute("username", "null");
@@ -96,7 +96,7 @@ public class UserController {
         }
 
         userService.registerUser(requestDto);
-        return "redirect:/user/login";
+        return "redirect:/user/loginView";
 
     }
 
