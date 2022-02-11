@@ -49,16 +49,16 @@
 
         <div class="form-group">
             <div class="login-id-label">비밀번호 확인</div>
-            <input th:field="*{checkpw}" type="password" id="checkpw" name="password" class="login-input-box">
-            <small class="form-text text-danger" th:errors="*{checkpw}" th:if="${#fields.hasErrors('checkpw')}"></small>
+            <input th:field="*{passwordcheck}" type="password" id="checkpw" name="password" class="login-input-box">
+            <small class="form-text text-danger" th:errors="*{passwordcheck}" th:if="${#fields.hasErrors('passwordcheck')}"></small>
         </div>
 
         <div class="form-group">
-            <div class="login-id-label">E-mail</div>
-            <input th:field="*{email}" type="text" id="email" name="email" placeholder="E-mail" class="login-input-box">
-            <small class="form-text text-danger" th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></small>
+            <div class="login-id-label">nickname</div>
+            <input th:field="*{nickname}" type="text" id="email" name="email" placeholder="E-mail" class="login-input-box">
+            <small class="form-text text-danger" th:errors="*{nickname}" th:if="${#fields.hasErrors('nickname')}"></small>
         </div>
-        <!--        <div th:if="${error}" th:text="${error}" class="alert alert-danger" role="alert"></div>-->
+                <div th:if="${error}" th:text="${error}" class="alert alert-danger" role="alert"></div>
         <button id="login-id-submit">회원 가입</button>
     </form>
 </div>
