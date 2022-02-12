@@ -31,37 +31,70 @@
 <div id="login-form">
     <div id="login-title">바다 위의 숲</div>
 
-    <form class="form" action="#" th:action="@{/user/signup}" th:object="${requestDto}" method="post" novalidate=""
-          style="width:370px">
-        <div class="form-group">
-            <div class="login-id-label">Username</div>
-            <input th:field="*{username}" type="text" id="username" name="username" placeholder="Username"
-                   class="login-input-box">
-            <small class="form-text text-danger" th:errors="*{username}" th:if="${#fields.hasErrors('username')}">username</small>
-        </div>
+<!--    <form class="form" action="#" th:action="@{/user/signup}" th:object="${requestDto}" method="post" novalidate=""-->
+<!--          style="width:370px">-->
+<!--        <div class="form-group">-->
+<!--            <div class="login-id-label">Username</div>-->
+<!--            <input th:field="*{username}" type="text" id="username" name="username" placeholder="Username"-->
+<!--                   class="login-input-box">-->
+<!--            <small class="form-text text-danger" th:errors="*{username}" th:if="${#fields.hasErrors('username')}">username</small>-->
+<!--        </div>-->
 
-        <div class="form-group">
-            <div class="login-id-label">Password</div>
-            <input th:field="*{password}" type="password" id="password" name="password" class="login-input-box">
-            <small class="form-text text-danger" th:errors="*{password}"
-                   th:if="${#fields.hasErrors('password')}"></small>
-        </div>
+<!--        <div class="form-group">-->
+<!--            <div class="login-id-label">Password</div>-->
+<!--            <input th:field="*{password}" type="password" id="password" name="password" class="login-input-box">-->
+<!--            <small class="form-text text-danger" th:errors="*{password}"-->
+<!--                   th:if="${#fields.hasErrors('password')}"></small>-->
+<!--        </div>-->
 
-        <div class="form-group">
-            <div class="login-id-label">비밀번호 확인</div>
-            <input th:field="*{passwordcheck}" type="password" id="checkpw" name="password" class="login-input-box">
-            <small class="form-text text-danger" th:errors="*{passwordcheck}" th:if="${#fields.hasErrors('passwordcheck')}"></small>
-        </div>
+<!--        <div class="form-group">-->
+<!--            <div class="login-id-label">비밀번호 확인</div>-->
+<!--            <input th:field="*{passwordcheck}" type="password" id="checkpw" name="password" class="login-input-box">-->
+<!--            <small class="form-text text-danger" th:errors="*{passwordcheck}" th:if="${#fields.hasErrors('passwordcheck')}"></small>-->
+<!--        </div>-->
 
-        <div class="form-group">
-            <div class="login-id-label">nickname</div>
-            <input th:field="*{nickname}" type="text" id="email" name="email" placeholder="E-mail" class="login-input-box">
-            <small class="form-text text-danger" th:errors="*{nickname}" th:if="${#fields.hasErrors('nickname')}"></small>
-        </div>
-                <div th:if="${error}" th:text="${error}" class="alert alert-danger" role="alert"></div>
-        <button id="login-id-submit">회원 가입</button>
-    </form>
+<!--        <div class="form-group">-->
+<!--            <div class="login-id-label">nickname</div>-->
+<!--            <input th:field="*{nickname}" type="text" id="email" name="email" placeholder="E-mail" class="login-input-box">-->
+<!--            <small class="form-text text-danger" th:errors="*{nickname}" th:if="${#fields.hasErrors('nickname')}"></small>-->
+<!--        </div>-->
+<!--                <div th:if="${error}" th:text="${error}" class="alert alert-danger" role="alert"></div>-->
+<!--        <button id="login-id-submit">회원 가입</button>-->
+<!--    </form>-->
+
+    <div>
+        <div class="login-id-label">username</div>
+        <input type="text" name="username" id="username" class="login-input-box">
+
+        <div class="login-id-label">비밀번호</div>
+        <input type="password" name="password" id="password" class="login-input-box">
+
+        <div class="login-id-label">2차비밀번호</div>
+        <input type="password" name="passwordheck" id="passwordcheck" class="login-input-box">
+
+        <div class="login-id-label">닉네임</div>
+        <input type="password" name="nickname" id="nickname" class="login-input-box">
+
+        <button id="login-id-submit" onclick="singup()">회원가입</button>
+    </div>
+
 </div>
 
 </body>
+<script>
+
+    function singup() {
+        $.ajax({
+            type: "POST",
+            url: `/user/signup`,
+            contentType: "application/json",
+            data: JSON.stringify({
+                username: $('#username').val(),
+                password: $('#password').val(),
+                passwordcheck: $('#passwordcheck').val(),
+                nickname: $('#nickname').val()
+            }),
+        })
+    }
+</script>
 </html>
