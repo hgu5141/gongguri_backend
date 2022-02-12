@@ -5,6 +5,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.example.gongguri.security.UserDetailsImpl;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class JwtTokenUtils {
 
@@ -27,14 +29,21 @@ public final class JwtTokenUtils {
     public static String generateJwtToken(UserDetailsImpl userDetails) {
         String token = null;
         try {
+            Map<String, Object> headers = new HashMap<>();
+            headers.put("typ", "JWT");
+            headers.put("alg", "HS256");
+
             token = JWT.create()
+                    .withHeader(headers)
                     .withIssuer("sparta")
                     .withClaim(CLAIM_USER_NAME, userDetails.getUsername())
                     // 토큰 만료 일시 = 현재 시간 + 토큰 유효기간)
                     .withClaim(CLAIM_EXPIRED_DATE, new Date(System.currentTimeMillis() + JWT_TOKEN_VALID_MILLI_SEC))
                     .withClaim(UID, userDetails.getUsername())
-                    .withClaim(UID, userDetails.getUser().getUid())
+                    .withClaim(UID, Long.toString(userDetails.getUser().getUid()))
                     .sign(generateAlgorithm());
+
+            System.out.println(token);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
