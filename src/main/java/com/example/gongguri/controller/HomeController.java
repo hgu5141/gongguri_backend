@@ -14,11 +14,6 @@ public class HomeController {
     @PreAuthorize("isAuthenticated()")
 
     public String home(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        if (userDetails == null) {
-            model.addAttribute("username", null);
-        } else {
-            model.addAttribute("username", userDetails.getUsername());
-        }
         return "index";
     }
 
@@ -32,7 +27,6 @@ public class HomeController {
     @GetMapping("/index")
     @PreAuthorize("isAuthenticated()")
     public String index(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        model.addAttribute("username", userDetails.getUsername());
         return "index";
     }
 
