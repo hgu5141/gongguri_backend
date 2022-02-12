@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
+@CrossOrigin(origins="http://3.36.65.28:8080")
 public class UserController {
 
     @Autowired
@@ -27,6 +29,7 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
 
 
     // 회원 로그인 페이지

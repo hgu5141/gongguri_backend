@@ -10,5 +10,5 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class UserDto {
-    private String uid;
+    private String userid;
 }
