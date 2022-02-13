@@ -24,6 +24,7 @@ public final class JwtTokenUtils {
     public static final String CLAIM_USER_NAME = "USER_NAME";
     public static final String JWT_SECRET = "5mini";
     public static final String UID = "UID";
+    public static final String NICKNAME = "NICKNAME";
 
 
     public static String generateJwtToken(UserDetailsImpl userDetails) {
@@ -41,6 +42,7 @@ public final class JwtTokenUtils {
                     .withClaim(CLAIM_EXPIRED_DATE, new Date(System.currentTimeMillis() + JWT_TOKEN_VALID_MILLI_SEC))
                     .withClaim(UID, userDetails.getUsername())
                     .withClaim(UID, Long.toString(userDetails.getUser().getUserid()))
+                    .withClaim(NICKNAME, userDetails.getUser().getNickname())
                     .sign(generateAlgorithm());
 
             System.out.println(token);

@@ -3,11 +3,13 @@ package com.example.gongguri.security;
 
 
 import com.example.gongguri.model.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+@Getter
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;
@@ -19,6 +21,7 @@ public class UserDetailsImpl implements UserDetails {
     public User getUser() {
         return user;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -34,6 +37,7 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return user.getUsername();
     }
+
 
     @Override
     public boolean isAccountNonExpired() {

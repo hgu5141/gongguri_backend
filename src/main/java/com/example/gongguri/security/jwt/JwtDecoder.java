@@ -36,8 +36,9 @@ public class JwtDecoder {
                 .getClaim(CLAIM_USER_NAME)
                 .asString();
 
-//디코드 검증
-        System.out.println(username);
+
+
+        System.out.println("토큰검증 : " + username);
         return username;
     }
 

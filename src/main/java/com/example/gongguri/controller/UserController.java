@@ -2,28 +2,34 @@ package com.example.gongguri.controller;
 
 
 import com.example.gongguri.dto.SignupRequestDto;
-import com.example.gongguri.repository.UserRepository;
+import com.example.gongguri.dto.UserInfoDto;
+import com.example.gongguri.exception.RestApiException;
+import com.example.gongguri.security.UserDetailsImpl;
 import com.example.gongguri.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class UserController {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     // 회원 로그인 페이지
     @GetMapping("/user/loginView")
-    public ResponseEntity<String> login() {
-    return ResponseEntity.ok()
-                .body("로그인 완료");
+    public String login() {
+    return "login";
     }
 
 
@@ -40,13 +46,25 @@ public class UserController {
     }
 
     @PostMapping("/user/signup")
-    public String registerUser(@RequestBody SignupRequestDto requestDto) {
-
-
+    public ResponseEntity<String> registerUser(@Valid @RequestBody SignupRequestDto requestDto) {
         System.out.println(requestDto);
         userService.registerUser(requestDto);
-        return "redirect:/user/loginView";
-
+        return ResponseEntity.ok()
+                .body("회원가입 완료");
     }
 
+    @PostMapping("/user/userinfo")
+    public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        String username = userDetails.getUser().getUsername();
+        String nickname = userDetails.getUser().getNickname();
+        System.out.println(username + nickname);
+        return new UserInfoDto(username, nickname);
+    }
+
+
+    @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
+    public ResponseEntity<RestApiException> exceptionHandler(Exception e) {
+        return ResponseEntity.badRequest()
+                .body(new RestApiException(e.getMessage(), HttpStatus.BAD_REQUEST));
+    }
 }
