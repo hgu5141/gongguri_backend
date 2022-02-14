@@ -1,7 +1,7 @@
 package com.example.gongguri.dto;
 
 
-
+import com.example.gongguri.model.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

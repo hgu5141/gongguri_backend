@@ -1,7 +1,7 @@
 package com.example.gongguri.model;
 
 
-import com.sparta.gongguri.dto.PostRequestDto;
+import com.example.gongguri.dto.PostRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

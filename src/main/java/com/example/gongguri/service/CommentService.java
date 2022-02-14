@@ -1,10 +1,11 @@
 package com.example.gongguri.service;
 
+
 import com.example.gongguri.dto.CommentRequestDto;
 import com.example.gongguri.dto.CommentResponseDto;
+import com.example.gongguri.model.Comment;
 import com.example.gongguri.model.Post;
 import com.example.gongguri.repository.CommentRepository;
-import com.example.gongguri.repository.PostRepositor;
 import com.example.gongguri.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
