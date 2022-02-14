@@ -1,10 +1,9 @@
 package com.example.gongguri.service;
 
-import com.sparta.gongguri.dto.PostRequestDto;
-import com.sparta.gongguri.dto.PostResponseDto;
-import com.sparta.gongguri.dto.ResultDto;
-import com.sparta.gongguri.model.Post;
-import com.sparta.gongguri.repository.PostRepository;
+import com.example.gongguri.dto.PostRequestDto;
+import com.example.gongguri.dto.PostResponseDto;
+import com.example.gongguri.model.Post;
+import com.example.gongguri.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
