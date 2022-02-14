@@ -1,5 +1,5 @@
 * {
-    font-family: '.Nanum Gothic', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
 }
 
 body {
@@ -309,14 +309,13 @@ button {
 }
 
 .folder-black, .folder-black:hover {
-    color: #fff !important;
-    background-color: #000 !important;
+    color: #fff!important;
+    background-color: #000!important;
 }
 
 .folder-bar .folder-button {
     white-space: normal;
 }
-
 .folder-bar .folder-bar-item {
     padding: 8px 16px;
     float: left;
@@ -473,9 +472,9 @@ button {
 }
 
 #logout-text {
-    position: absolute;
-    top: 48px;
-    right: 48px;
+    position:absolute;
+    top:48px;
+    right:48px;
     font-size: 18px;
     font-family: SpoqaHanSansNeo;
     font-size: 18px;
@@ -690,20 +689,25 @@ button {
     /*    column-gap: 10px;*/
     /*    row-gap: 15px;*/
     /*}*/
+
     /*.product-card {*/
     /*    width: 300px;*/
     /*    margin: auto;*/
     /*    cursor: pointer;*/
     /*}*/
+
     /*.product-card .card-header {*/
     /*    width: 300px;*/
     /*}*/
+
     /*.product-card .card-header img {*/
     /*    width: 300px;*/
     /*}*/
+
     /*.product-card .card-body {*/
     /*    margin-top: 15px;*/
     /*}*/
+
     /*.product-card .card-body .title {*/
     /*    font-size: 15px;*/
     /*    font-weight: normal;*/
@@ -718,6 +722,7 @@ button {
     /*    white-space: nowrap;*/
     /*    text-overflow: ellipsis;*/
     /*}*/
+
     /*.product-card .card-body .lprice {*/
     /*    font-size: 15.8px;*/
     /*    font-weight: normal;*/
@@ -728,6 +733,7 @@ button {
     /*    color: #000000;*/
     /*    margin-bottom: 10px;*/
     /*}*/
+
     /*.product-card .card-body .lprice span {*/
     /*    font-size: 21.4px;*/
     /*    font-weight: 600;*/
@@ -738,6 +744,7 @@ button {
     /*    text-align: left;*/
     /*    color: #E8344E;*/
     /*}*/
+
     /*.product-card .card-body .isgood {*/
     /*    margin-top: 10px;*/
     /*    padding: 10px 20px;*/
@@ -746,6 +753,7 @@ button {
     /*    background-color: #ff8787;*/
     /*    width: 48px;*/
     /*}*/
+
     .none {
         display: none;
     }
@@ -769,29 +777,24 @@ button {
     position: relative;
     display: inline-block;
 }
-
 input {
     border: 1px solid transparent;
     background-color: #f1f1f1;
     padding: 10px;
     font-size: 16px;
 }
-
 input[type=text] {
     background-color: #f1f1f1;
     /*width: 100%;*/
 }
-
 input[type=password] {
     background-color: #f1f1f1;
     /*width: 100%;*/
 }
-
 input[type=submit] {
     background-color: DodgerBlue;
     color: #fff;
 }
-
 .autocomplete-items {
     position: absolute;
     border: 1px solid #d4d4d4;
@@ -803,19 +806,16 @@ input[type=submit] {
     left: 0;
     right: 0;
 }
-
 .autocomplete-items div {
     padding: 10px;
     cursor: pointer;
     background-color: #fff;
     border-bottom: 1px solid #d4d4d4;
 }
-
 .autocomplete-items div:hover {
     /*when hovering an item:*/
     background-color: #e9e9e9;
 }
-
 .autocomplete-active {
     /*when navigating through the items using the arrow keys:*/
     background-color: DodgerBlue !important;

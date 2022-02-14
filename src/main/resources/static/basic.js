@@ -3,7 +3,7 @@ let targetId;
 $(document).ready(function () {
     if ($.cookie('token')) {
         $.ajaxSetup({
-            headers: {
+            headers:{
                 'Authorization': $.cookie('token')
             }
         })
@@ -17,19 +17,20 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (response) {
             const username = response.username;
-
-            if (!username) {
-                window.location.href = '/user/loginView';
-            }
+            const nickname = response.nickname;
+            // if (!username) {
+            //     window.location.href = '/user/loginView';
+            // }
 
             $('#username').text(username);
-            if (isAdmin) {
-                showProduct(true);
-            } else {
-                showProduct();
-            }
+            $('#nickname').text(nickname);
+            // if (isAdmin) {
+            //     showProduct(true);
+            // } else {
+            //     showProduct();
+            // }
         },
-        // error: function () {
+        // error: function() {
         //     window.location.href = '/user/loginView';
         // }
     })
