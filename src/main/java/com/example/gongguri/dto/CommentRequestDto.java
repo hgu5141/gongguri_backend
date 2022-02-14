@@ -1,7 +1,7 @@
 package com.example.gongguri.dto;
 
 
-import com.example.gongguri.model.Post;
+import com.example.gongguri.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CommentRequestDto {
-
+    private User user;
     private String comment;
 }

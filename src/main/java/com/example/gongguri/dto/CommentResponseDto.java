@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 public class CommentResponseDto {
 
+
     private Long commentId;
     private String comment;
 }

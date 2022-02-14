@@ -25,6 +25,9 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @ManyToOne
+    private User user;
+
 //    @Column(nullable = false)
 //    private Long postId;
 
@@ -32,8 +35,9 @@ public class Comment {
 //        this.comment=commentRequestDto.getComment();
 //    }
 
-    public Comment(Post post, CommentRequestDto commentRequestDto) {
+    public Comment(Post post,User user, CommentRequestDto commentRequestDto) {
         this.post = post;
+        this.user = user;
         this.comment = commentRequestDto.getComment();
     }
 

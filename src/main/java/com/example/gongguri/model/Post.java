@@ -53,7 +53,8 @@ public class Post {
     @ManyToOne
     private User user;
 
-    public Post(PostRequestDto postRequestDto) {
+    public Post(User user,PostRequestDto postRequestDto) {
+        this.user = user;
         this.content =postRequestDto.getContent();
         this.imageUrl=postRequestDto.getImageUrl();
         this.title=postRequestDto.getTitle();
@@ -63,7 +64,9 @@ public class Post {
         this.minimum=postRequestDto.getMinimum();
     }
 
-    public void update(PostRequestDto postRequestDto) {
+
+    public void update(User user, PostRequestDto postRequestDto) {
+        this.user =user;
         this.title =postRequestDto.getTitle();
         this.content = postRequestDto.getContent();
     }
