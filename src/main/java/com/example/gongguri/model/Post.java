@@ -49,6 +49,10 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
+
+    @ManyToOne
+    private User user;
+
     public Post(PostRequestDto postRequestDto) {
         this.content =postRequestDto.getContent();
         this.imageUrl=postRequestDto.getImageUrl();
@@ -63,6 +67,4 @@ public class Post {
         this.title =postRequestDto.getTitle();
         this.content = postRequestDto.getContent();
     }
-
-
 }

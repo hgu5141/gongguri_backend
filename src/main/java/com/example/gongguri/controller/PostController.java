@@ -2,8 +2,10 @@ package com.example.gongguri.controller;
 
 import com.example.gongguri.dto.PostRequestDto;
 import com.example.gongguri.dto.PostResponseDto;
+import com.example.gongguri.security.UserDetailsImpl;
 import com.example.gongguri.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,5 +42,10 @@ public class PostController {
     public Long updateArticle(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto) {
         postService.updatePost(postId, postRequestDto);
         return postId;
+    }
+
+    @DeleteMapping("api/posts/{postId")
+    public void deletePost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        postService.deletePost(postId, userDetails);
     }
 }
