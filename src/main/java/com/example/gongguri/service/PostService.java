@@ -3,13 +3,16 @@ package com.example.gongguri.service;
 import com.example.gongguri.dto.PostRequestDto;
 import com.example.gongguri.dto.PostResponseDto;
 import com.example.gongguri.model.Post;
+import com.example.gongguri.model.User;
 import com.example.gongguri.repository.PostRepository;
+import com.example.gongguri.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -57,7 +60,7 @@ public class PostService {
     public PostResponseDto getPost(Long postId) {
 
         Post post =postRepository.findById(postId).orElseThrow(
-                ()->new IllegalArgumentException( " 게시글이 없습니다 ")
+                ()->new IllegalArgumentException( "게시글이 없습니다 ")
         );
 //        boolean result = true;
         String title = post.getTitle();
@@ -84,6 +87,18 @@ public class PostService {
     }
 
 
+    public void deletePost(Long postId, UserDetailsImpl userDetails) {
+        User user = ValidateChecker.userDetailsIsNull(userDetails);
 
+        Optional<Post> post = postRepository.findById(postId);
+        if(!post.isPresent()) {
+            throw  new IllegalArgumentException("게시물을 찾을 수 없습니다.");
+        }
+        if(!user.getUserid().equals(post.get().getUser().getUserid())){
+            throw new IllegalArgumentException("해당 게시글을 삭제하실 권한이 없습니다.");
+        }
 
+        postRepository.deleteById(postId);
+
+    }
 }
