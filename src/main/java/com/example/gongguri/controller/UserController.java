@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@ControllerAdvice
 public class UserController {
 
     private final UserService userService;
@@ -61,28 +60,8 @@ public class UserController {
     public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         String username = userDetails.getUser().getUsername();
         String nickname = userDetails.getUser().getNickname();
-        System.out.println(username + nickname);
+        System.out.println(username + " " + nickname);
         return new UserInfoDto(username, nickname);
     }
 
-
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<RestApiException> processValidationError(MethodArgumentNotValidException e) {
-        BindingResult bindingResult = e.getBindingResult();
-
-        StringBuilder builder = new StringBuilder();
-        for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            builder.append(fieldError.getDefaultMessage());
-        }
-        return ResponseEntity.badRequest()
-                .body(new RestApiException(builder.toString(), HttpStatus.BAD_REQUEST));
-    }
-
-
-    @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
-    public ResponseEntity<RestApiException> exceptionHandler(Exception e) {
-        return ResponseEntity.badRequest()
-                .body(new RestApiException(e.getMessage(), HttpStatus.BAD_REQUEST));
-    }
 }

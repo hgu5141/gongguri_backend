@@ -17,7 +17,6 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (response) {
             const username = response.username;
-            const isAdmin = !!response.admin;
 
             if (!username) {
                 window.location.href = '/user/loginView';
@@ -30,9 +29,9 @@ $(document).ready(function () {
                 showProduct();
             }
         },
-        error: function () {
-            window.location.href = '/user/loginView';
-        }
+        // error: function () {
+        //     window.location.href = '/user/loginView';
+        // }
     })
 
     // id 가 query 인 녀석 위에서 엔터를 누르면 execSearch() 함수를 실행하라는 뜻입니다.
