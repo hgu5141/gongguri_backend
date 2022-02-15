@@ -4,6 +4,7 @@ import com.example.gongguri.dto.BuyerCountRequestDto;
 import com.example.gongguri.dto.PostRequestDto;
 import com.example.gongguri.dto.PostResponseDto;
 import com.example.gongguri.model.Post;
+import com.example.gongguri.model.User;
 import com.example.gongguri.security.UserDetailsImpl;
 import com.example.gongguri.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -61,15 +62,22 @@ public class PostController {
         }catch(Exception ex) {
             return ResponseEntity.badRequest().body("Invalid Parameter");
         }
-
-
-
-
     }
 
-//    @PostMapping("/api/posts/{postId}/count")
-//    public void updateCount (@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails, BuyerCountRequestDto buyerCountRequestDto){
-//        postService.updateCount(postId,userDetails,buyerCountRequestDto);
+    @PostMapping("/api/posts/{postId}/count")
+    public void updateCount (@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        postService.updateCount(postId,userDetails);
+    }
+
+//    @PostMapping("/api/posts/{postId}/buyercount")
+//    public void createBuyerCount (
+//            @PathVariable Long postId,
+//            @AuthenticationPrincipal UserDetailsImpl userDetails
+//    ) {
+//        postService.createBuyerCount(postId,userDetails);
 //    }
+
+
+
 
 }

@@ -21,6 +21,7 @@ public class PostResponseDto {
     private int price;
     private int minimum;
     private int buyercount;
+//    private int count;
 
 
 

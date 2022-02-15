@@ -13,5 +13,5 @@ public class BuyerCountResponseDto {
     private Long postId;
     private String username;
     private String nickname;
-    private int count;
+    private int buycount;
 }
