@@ -12,6 +12,7 @@ public class PostResponseDto {
 
     private Long postId;
     private String username;
+    private String nickname;
     private String title;
     private String content;
     private String imageUrl;

@@ -16,4 +16,15 @@ public class PostRequestDto {
     private int price;
     private int minimum;
 
+
+//    {
+//        "content" : "content1",
+//            "imageUrl" : "imageUrl1",
+//            "title" : "title",
+//            "startAt" : "startAt",
+//            "endAt" : "endAt",
+//            "price" : 10000,
+//            "minimum" : 100
+//    }
+
 }

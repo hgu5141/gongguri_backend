@@ -41,4 +41,6 @@ public class ValidateChecker {
         value = value.replaceAll("script", "");
         return value;
     }
+
+
 }
