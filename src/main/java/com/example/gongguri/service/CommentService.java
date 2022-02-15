@@ -47,21 +47,27 @@ public class CommentService {
         for (Comment comment1 : commentList){
             Long commentId = comment1.getCommentId();
             String comment = comment1.getComment();
-
-            CommentResponseDto commentResponseDto = new CommentResponseDto(commentId,comment);
+            String username = comment1.getUser().getUsername();
+            String nickname = comment1.getUser().getNickname();
+            CommentResponseDto commentResponseDto = new CommentResponseDto(username,nickname,commentId,comment);
             comments.add(commentResponseDto);
         }
             return comments;
     }
 
-    public void deleteComments(Long commentId, UserDetailsImpl userDetails) {
+    public boolean deleteComments(Long commentId, UserDetailsImpl userDetails) {
         User user = ValidateChecker.userDetailsIsNull(userDetails);
 
-        Comment comment = commentRepository.findById(commentId).orElseThrow(
-                ()-> new IllegalArgumentException("삭제할 코멘트가 존재하지 않습니다.")
-        );
+        Optional<Comment> comment = commentRepository.findById(commentId);
 
-        commentRepository.delete(comment);
+
+        if (comment.isPresent() && user.getUserid().equals(comment.get().getUser().getUserid()) ) {
+            this.commentRepository.delete(comment.get());
+            return true;
+        }
+
+//        commentRepository.deleteById(commentId);
+        return false;
     }
 
 

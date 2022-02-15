@@ -43,6 +43,7 @@ public class PostService {
                 allPosts.add(new PostResponseDto(
                         post.getId(),
                         post.getUser().getUsername(),
+                        post.getUser().getNickname(),
                         post.getTitle(),
                         post.getContent(),
                         post.getImageUrl(),
@@ -69,6 +70,7 @@ public class PostService {
         );
 //        boolean result = true;
         String username = post.getUser().getUsername();
+        String nickname = post.getUser().getNickname();
         String title = post.getTitle();
         String content =post.getContent();
         String imageurl = post.getImageUrl();
@@ -77,7 +79,7 @@ public class PostService {
         int price = post.getPrice();
         int minimum = post.getMinimum();
         int buyercount =post.getBuyercount();
-        return new PostResponseDto(postId,username,title,content,imageurl,startAt,endAt,price,minimum,buyercount);
+        return new PostResponseDto(postId,username,nickname,title,content,imageurl,startAt,endAt,price,minimum,buyercount);
     }
 
     //게시글 상세페이지 수정
@@ -94,18 +96,41 @@ public class PostService {
         post.update(user, postRequestDto);
     }
 
-    public void deletePost(Long postId, UserDetailsImpl userDetails) {
+    public boolean deletePost(Long postId, UserDetailsImpl userDetails) {
         User user = ValidateChecker.userDetailsIsNull(userDetails);
 
         Optional<Post> post = postRepository.findById(postId);
-        if(!post.isPresent()) {
-            throw  new IllegalArgumentException("게시물을 찾을 수 없습니다.");
-        }
+//        if(!post.isPresent()) {
+//            throw  new IllegalArgumentException("게시물을 찾을 수 없습니다.");
+//        }
 //        if(!user.getUserid().equals(post.get().getUser().getUserid())){
 //            throw new IllegalArgumentException("해당 게시글을 삭제하실 권한이 없습니다.");
 //        }
 
-        postRepository.deleteById(postId);
+        if (post.isPresent() && user.getUserid().equals(post.get().getUser().getUserid()) ) {
+            this.postRepository.delete(post.get());
+            return true;
+        }
+//        if(!user.getUserid().equals(post.get().getUser().getUserid())){
+////            throw new IllegalArgumentException("해당 게시글을 삭제하실 권한이 없습니다.");
+////        }
 
+//        postRepository.deleteById(postId);
+        return false;
     }
+
+//    @Transactional
+//    public void updateCount(Long postId, UserDetailsImpl userDetails, BuyerCountRequestDto buyerCountRequestDto) {
+//        Post post = postRepository.findById(postId).orElseThrow(
+//                ()->new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+//        BuyerCount buyerCount = new BuyerCount(userDetails.getUser(),post);
+//        Optional<BuyerCount> countcheck = Optional.ofNullable(
+//                        buyerCountRepository.findByUserAndPostId(userDetails.getUser(),postId,buyerCountRequestDto.getCount())
+//                );
+//        if(countcheck.isPresent()){ //구매 누른상태
+//            buyerCountRepository.deleteByUserAndPostId(buyerCountRequestDto.getCount());
+//        }
+//        buyerCountRepository.save(buyerCount);
+//
+//    }
 }

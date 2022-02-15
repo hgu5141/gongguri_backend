@@ -5,16 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-
-@AllArgsConstructor
 @Getter
 @Setter
-public class CommentResponseDto {
+@AllArgsConstructor
+public class BuyerCountResponseDto {
 
+    private Long postId;
     private String username;
     private String nickname;
-    private Long commentId;
-    private String comment;
-
-
+    private int count;
 }

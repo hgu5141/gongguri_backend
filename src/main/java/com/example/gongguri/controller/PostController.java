@@ -1,10 +1,13 @@
 package com.example.gongguri.controller;
 
+import com.example.gongguri.dto.BuyerCountRequestDto;
 import com.example.gongguri.dto.PostRequestDto;
 import com.example.gongguri.dto.PostResponseDto;
+import com.example.gongguri.model.Post;
 import com.example.gongguri.security.UserDetailsImpl;
 import com.example.gongguri.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,8 +47,29 @@ public class PostController {
         return postId;
     }
 
-    @DeleteMapping("api/posts/{postId}")
-    public void deletePost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        postService.deletePost(postId, userDetails);
+    @DeleteMapping("/api/posts/{postId}")
+    public ResponseEntity<String> deletePost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        postService.deletePost(postId, userDetails);
+
+        try {
+            boolean isDelete = this.postService.deletePost(postId,userDetails);
+            if (isDelete) {
+                return ResponseEntity.ok("success");
+            }else {
+                return ResponseEntity.badRequest().body("can't find entity");
+            }
+        }catch(Exception ex) {
+            return ResponseEntity.badRequest().body("Invalid Parameter");
+        }
+
+
+
+
     }
+
+//    @PostMapping("/api/posts/{postId}/count")
+//    public void updateCount (@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails, BuyerCountRequestDto buyerCountRequestDto){
+//        postService.updateCount(postId,userDetails,buyerCountRequestDto);
+//    }
+
 }
