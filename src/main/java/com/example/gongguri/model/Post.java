@@ -59,7 +59,7 @@ public class Post {
         this.imageUrl=postRequestDto.getImageUrl();
         this.title=postRequestDto.getTitle();
         this.startAt=postRequestDto.getStartAt();
-        this.endAt=postRequestDto.getStartAt();
+        this.endAt=postRequestDto.getEndAt();
         this.price=postRequestDto.getPrice();
         this.minimum=postRequestDto.getMinimum();
     }

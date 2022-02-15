@@ -24,6 +24,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000")
+                .allowedOrigins("https://main.d24srn55lvt7ib.amplifyapp.com")
+                .allowedOrigins("*")
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .exposedHeaders(HttpHeaders.AUTHORIZATION)
@@ -36,6 +38,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry
                 .addResourceHandler("/image/**")
                 .addResourceLocations("file:///home/ubuntu/image/");
-//                .addResourceLocations("file:///Users/jeong-yeongbin/Desktop/project/Team-11-Back/src/main/resources/static/image/");
+//                .addResourceLocations("file:///hanghae/gongguri/src/main/resources/static/images");
     }
 }

@@ -43,6 +43,7 @@ public class PostService {
                 allPosts.add(new PostResponseDto(
                         post.getId(),
                         post.getUser().getUsername(),
+                        post.getUser().getNickname(),
                         post.getTitle(),
                         post.getContent(),
                         post.getImageUrl(),
@@ -69,6 +70,7 @@ public class PostService {
         );
 //        boolean result = true;
         String username = post.getUser().getUsername();
+        String nickname = post.getUser().getNickname();
         String title = post.getTitle();
         String content =post.getContent();
         String imageurl = post.getImageUrl();
@@ -77,7 +79,7 @@ public class PostService {
         int price = post.getPrice();
         int minimum = post.getMinimum();
         int buyercount =post.getBuyercount();
-        return new PostResponseDto(postId,username,title,content,imageurl,startAt,endAt,price,minimum,buyercount);
+        return new PostResponseDto(postId,username,nickname,title,content,imageurl,startAt,endAt,price,minimum,buyercount);
     }
 
     //게시글 상세페이지 수정
@@ -106,6 +108,8 @@ public class PostService {
 //        }
 
         postRepository.deleteById(postId);
-
     }
+
+
+
 }

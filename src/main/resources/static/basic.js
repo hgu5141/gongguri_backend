@@ -7,9 +7,10 @@ $(document).ready(function () {
                 'Authorization': $.cookie('token')
             }
         })
-    } else {
-        window.location.href = '/user/loginView';
     }
+    // else {
+    //     window.location.href = '/user/loginView';
+    // }
 
     $.ajax({
         type: "POST",
