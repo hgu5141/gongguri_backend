@@ -20,8 +20,8 @@ public class PostController {
 
     //    공동구매 글 작성
     @PostMapping("/api/posts")
-    public void createPost(@RequestBody PostRequestDto postRequestDto) {
-        postService.createPost(postRequestDto);
+    public void createPost(@RequestBody PostRequestDto postRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        postService.createPost(userDetails, postRequestDto);
     }
 
     //    게시글 조회 ( 전체페이지)
@@ -39,12 +39,12 @@ public class PostController {
 
     //    게시글 수정 ( 상세페이지)
     @PutMapping("/api/posts/{postId}")
-    public Long updateArticle(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto) {
-        postService.updatePost(postId, postRequestDto);
+    public Long updateArticle(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        postService.updatePost(postId, userDetails, postRequestDto);
         return postId;
     }
 
-    @DeleteMapping("api/posts/{postId")
+    @DeleteMapping("api/posts/{postId}")
     public void deletePost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         postService.deletePost(postId, userDetails);
     }

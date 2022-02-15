@@ -5,6 +5,7 @@ import com.example.gongguri.dto.PostResponseDto;
 import com.example.gongguri.model.Post;
 import com.example.gongguri.model.User;
 import com.example.gongguri.repository.PostRepository;
+import com.example.gongguri.repository.UserRepository;
 import com.example.gongguri.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,15 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
+
 
 
 //    게시글 작성
     @Transactional
-    public void createPost(PostRequestDto postRequestDto) {
-        Post post = new Post(postRequestDto);
+    public void createPost(UserDetailsImpl userDetails,PostRequestDto postRequestDto) {
+        User user = ValidateChecker.userDetailsIsNull(userDetails);
+        Post post = new Post(user,postRequestDto);
         postRepository.save(post);
     }
 
@@ -38,6 +42,7 @@ public class PostService {
             for (Post post : posts) {
                 allPosts.add(new PostResponseDto(
                         post.getId(),
+                        post.getUser().getUsername(),
                         post.getTitle(),
                         post.getContent(),
                         post.getImageUrl(),
@@ -63,6 +68,7 @@ public class PostService {
                 ()->new IllegalArgumentException( "게시글이 없습니다 ")
         );
 //        boolean result = true;
+        String username = post.getUser().getUsername();
         String title = post.getTitle();
         String content =post.getContent();
         String imageurl = post.getImageUrl();
@@ -71,21 +77,22 @@ public class PostService {
         int price = post.getPrice();
         int minimum = post.getMinimum();
         int buyercount =post.getBuyercount();
-        return new PostResponseDto(postId,title,content,imageurl,startAt,endAt,price,minimum,buyercount);
+        return new PostResponseDto(postId,username,title,content,imageurl,startAt,endAt,price,minimum,buyercount);
     }
 
     //게시글 상세페이지 수정
     @Transactional
-    public void updatePost(Long postId, PostRequestDto postRequestDto) {
+    public void updatePost(Long postId, UserDetailsImpl userDetails, PostRequestDto postRequestDto) {
+
+        User user = ValidateChecker.userDetailsIsNull(userDetails);
+
         Post post = postRepository.findById(postId).orElseThrow(
                 ()-> new IllegalArgumentException("게시글이 존재하지 않습니다.")
         );
         System.out.println(postRequestDto.getContent());
         System.out.println(postRequestDto.getTitle());
-        post.update(postRequestDto);
-
+        post.update(user, postRequestDto);
     }
-
 
     public void deletePost(Long postId, UserDetailsImpl userDetails) {
         User user = ValidateChecker.userDetailsIsNull(userDetails);
@@ -94,9 +101,9 @@ public class PostService {
         if(!post.isPresent()) {
             throw  new IllegalArgumentException("게시물을 찾을 수 없습니다.");
         }
-        if(!user.getUserid().equals(post.get().getUser().getUserid())){
-            throw new IllegalArgumentException("해당 게시글을 삭제하실 권한이 없습니다.");
-        }
+//        if(!user.getUserid().equals(post.get().getUser().getUserid())){
+//            throw new IllegalArgumentException("해당 게시글을 삭제하실 권한이 없습니다.");
+//        }
 
         postRepository.deleteById(postId);
 

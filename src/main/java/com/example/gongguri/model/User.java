@@ -26,8 +26,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String nickname;
 
-    @OneToMany()
-    private Post post;
+//    @OneToMany()
+//    private Post post;
 
 
 

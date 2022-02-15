@@ -8,7 +8,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class PostResponseDto {
+
+
     private Long postId;
+    private String username;
     private String title;
     private String content;
     private String imageUrl;
