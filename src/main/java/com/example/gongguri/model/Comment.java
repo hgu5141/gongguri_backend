@@ -31,9 +31,7 @@ public class Comment {
 //    @Column(nullable = false)
 //    private Long postId;
 
-//    public Comment(CommentRequestDto commentRequestDto) {
-//        this.comment=commentRequestDto.getComment();
-//    }
+
 
     public Comment(Post post,User user, CommentRequestDto commentRequestDto) {
         this.post = post;

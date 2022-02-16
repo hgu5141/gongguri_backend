@@ -2,10 +2,12 @@ package com.example.gongguri.model;
 
 
 import com.example.gongguri.dto.PostRequestDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -43,8 +45,13 @@ public class Post {
     @Column
     private int minimum;
 
-    @Column
-    private int buyercount;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    private List<BuyerCount> buyercount = new ArrayList<>();
+
+
+
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
@@ -70,4 +77,6 @@ public class Post {
         this.title =postRequestDto.getTitle();
         this.content = postRequestDto.getContent();
     }
+
+
 }

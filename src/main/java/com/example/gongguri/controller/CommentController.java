@@ -7,6 +7,7 @@ import com.example.gongguri.dto.CommentResponseDto;
 import com.example.gongguri.security.UserDetailsImpl;
 import com.example.gongguri.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,9 +33,22 @@ public class CommentController {
     }
 
 //    코멘트 삭제하기
-    @GetMapping("/api/{commentId}/comments")
-    public void deleteComment(@PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl userDetails){
-       commentService.deleteComments(commentId,userDetails);
+    @DeleteMapping("/api/comments/{commentId}")
+    public ResponseEntity<String> deleteComment(@PathVariable Long commentId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+//       commentService.deleteComments(commentId,userDetails);
+
+        try {
+            boolean isDelete = this.commentService.deleteComments(commentId,userDetails);
+            if (isDelete) {
+                return ResponseEntity.ok("success");
+            }else {
+                return ResponseEntity.badRequest().body("can't find entity");
+            }
+        }catch(Exception ex) {
+            return ResponseEntity.badRequest().body("Invalid Parameter");
+        }
+
+
     }
 
 

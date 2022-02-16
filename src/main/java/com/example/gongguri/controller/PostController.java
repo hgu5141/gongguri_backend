@@ -1,9 +1,13 @@
 package com.example.gongguri.controller;
 
+
+import com.example.gongguri.dto.BuyerCountRequestDto;
 import com.example.gongguri.dto.ImageDto;
 import com.example.gongguri.dto.PostRequestDto;
 import com.example.gongguri.dto.PostResponseDto;
 import com.example.gongguri.exception.RestApiException;
+import com.example.gongguri.model.Post;
+import com.example.gongguri.model.User;
 import com.example.gongguri.security.UserDetailsImpl;
 import com.example.gongguri.service.ImageService;
 import com.example.gongguri.service.PostService;
@@ -54,10 +58,22 @@ public class PostController {
         return postId;
     }
 
-    @DeleteMapping("api/posts/{postId}")
-    public void deletePost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        postService.deletePost(postId, userDetails);
+    @DeleteMapping("/api/posts/{postId}")
+    public ResponseEntity<String> deletePost(@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        postService.deletePost(postId, userDetails);
+
+        try {
+            boolean isDelete = this.postService.deletePost(postId,userDetails);
+            if (isDelete) {
+                return ResponseEntity.ok("success");
+            }else {
+                return ResponseEntity.badRequest().body("can't find entity");
+            }
+        }catch(Exception ex) {
+            return ResponseEntity.badRequest().body("Invalid Parameter");
+        }
     }
+
 
     private final S3Uploader s3Uploader;
 
@@ -86,7 +102,7 @@ public class PostController {
     @PostMapping("/api/images")//난중에 userDetails로 User도 같이 넣어줘야함 일단 테스트 용도로 User빼고 작성
     public ResponseEntity<ImageDto> imageTest(@RequestParam("file") MultipartFile file) throws IOException {
         System.out.println(file);
-        return ResponseEntity.ok()
+        return (ResponseEntity<ImageDto>) ResponseEntity.ok()
                 .body(imageService.imageUpload(file));
     }
 
@@ -95,5 +111,22 @@ public class PostController {
         return ResponseEntity.badRequest()
                 .body(new RestApiException(e.getMessage(), HttpStatus.BAD_REQUEST));
     }
+
+    @PostMapping("/api/posts/{postId}/buycount")
+    public void updateCount (@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        postService.updateCount(postId,userDetails);
+    }
+
+//    @PostMapping("/api/posts/{postId}/buyercount")
+//    public void createBuyerCount (
+//            @PathVariable Long postId,
+//            @AuthenticationPrincipal UserDetailsImpl userDetails
+//    ) {
+//        postService.createBuyerCount(postId,userDetails);
+//    }
+
+
+
+
 }
 
