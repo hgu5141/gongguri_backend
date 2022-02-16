@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,7 @@ public class PostService {
     public void createPost(UserDetailsImpl userDetails,PostRequestDto postRequestDto) {
         User user = ValidateChecker.userDetailsIsNull(userDetails);
         Post post = new Post(user,postRequestDto);
+
         postRepository.save(post);
     }
 
@@ -43,7 +45,22 @@ public class PostService {
         List<PostResponseDto> allPosts = new ArrayList<>();
 //            allPosts.add(result= true);
 
+//        BuyerCount buyerCount = (BuyerCount) buyerCountRepository.findById(post);
+
+//        ArrayList<BuyerCount> arraylist = new ArrayList<>();
+//
+//        int arraylist_size = arraylist.size();
+//        System.out.println( arraylist_size );
+
+//        Member member = new Member();
+//        member.setName("이름");
+//
+//        Member newMember = new Member();
+//// member 의 name 필드를 newMember 에 set
+//        newMember.setName(member.getName());
+//        int size = (int) buyerCountRepository.count();// size
             for (Post post : posts) {
+
                 allPosts.add(new PostResponseDto(
                         post.getId(),
                         post.getUser().getUsername(),
@@ -55,7 +72,7 @@ public class PostService {
                         post.getEndAt(),
                         post.getPrice(),
                         post.getMinimum(),
-                        post.getBuyercount()
+                        post.getBuyercount().size()
                 ));
             }
 
@@ -82,7 +99,7 @@ public class PostService {
         String endAt = post.getEndAt();
         int price = post.getPrice();
         int minimum = post.getMinimum();
-        int buyercount =post.getBuyercount();
+        int buyercount =post.getBuyercount().size();
         return new PostResponseDto(postId,username,nickname,title,content,imageurl,startAt,endAt,price,minimum,buyercount);
     }
 
@@ -129,6 +146,7 @@ public class PostService {
 
         BuyerCount buyerCount1 = new BuyerCount(user, post, 0);
         BuyerCount buyerCount2 = buyerCountRepository.findByUserAndPost(user,post);
+
 
         Optional<BuyerCount> countcheck = buyerCountRepository.findByUserAndPostAndBuycount(user,post,1);
 

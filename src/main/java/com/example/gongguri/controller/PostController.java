@@ -64,7 +64,7 @@ public class PostController {
         }
     }
 
-    @PostMapping("/api/posts/{postId}/count")
+    @PostMapping("/api/posts/{postId}/buycount")
     public void updateCount (@PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         postService.updateCount(postId,userDetails);
     }
