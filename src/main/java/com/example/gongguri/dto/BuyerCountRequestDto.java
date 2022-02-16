@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 public class BuyerCountRequestDto {
 
-    private int count;
+    private int buycount;
 
 }

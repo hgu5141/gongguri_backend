@@ -1,9 +1,12 @@
 package com.example.gongguri.service;
 
+import com.example.gongguri.dto.BuyerCountRequestDto;
 import com.example.gongguri.dto.PostRequestDto;
 import com.example.gongguri.dto.PostResponseDto;
+import com.example.gongguri.model.BuyerCount;
 import com.example.gongguri.model.Post;
 import com.example.gongguri.model.User;
+import com.example.gongguri.repository.BuyerCountRepository;
 import com.example.gongguri.repository.PostRepository;
 import com.example.gongguri.repository.UserRepository;
 import com.example.gongguri.security.UserDetailsImpl;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +26,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final BuyerCountRepository buyerCountRepository;
 
 
 
@@ -30,6 +35,7 @@ public class PostService {
     public void createPost(UserDetailsImpl userDetails,PostRequestDto postRequestDto) {
         User user = ValidateChecker.userDetailsIsNull(userDetails);
         Post post = new Post(user,postRequestDto);
+
         postRepository.save(post);
     }
 
@@ -39,7 +45,22 @@ public class PostService {
         List<PostResponseDto> allPosts = new ArrayList<>();
 //            allPosts.add(result= true);
 
+//        BuyerCount buyerCount = (BuyerCount) buyerCountRepository.findById(post);
+
+//        ArrayList<BuyerCount> arraylist = new ArrayList<>();
+//
+//        int arraylist_size = arraylist.size();
+//        System.out.println( arraylist_size );
+
+//        Member member = new Member();
+//        member.setName("이름");
+//
+//        Member newMember = new Member();
+//// member 의 name 필드를 newMember 에 set
+//        newMember.setName(member.getName());
+//        int size = (int) buyerCountRepository.count();// size
             for (Post post : posts) {
+
                 allPosts.add(new PostResponseDto(
                         post.getId(),
                         post.getUser().getUsername(),
@@ -51,7 +72,7 @@ public class PostService {
                         post.getEndAt(),
                         post.getPrice(),
                         post.getMinimum(),
-                        post.getBuyercount()
+                        post.getBuyercount().size()
                 ));
             }
 
@@ -78,7 +99,7 @@ public class PostService {
         String endAt = post.getEndAt();
         int price = post.getPrice();
         int minimum = post.getMinimum();
-        int buyercount =post.getBuyercount();
+        int buyercount =post.getBuyercount().size();
         return new PostResponseDto(postId,username,nickname,title,content,imageurl,startAt,endAt,price,minimum,buyercount);
     }
 
@@ -91,8 +112,6 @@ public class PostService {
         Post post = postRepository.findById(postId).orElseThrow(
                 ()-> new IllegalArgumentException("게시글이 존재하지 않습니다.")
         );
-        System.out.println(postRequestDto.getContent());
-        System.out.println(postRequestDto.getTitle());
         post.update(user, postRequestDto);
     }
 
@@ -119,18 +138,43 @@ public class PostService {
         return false;
     }
 
-//    @Transactional
-//    public void updateCount(Long postId, UserDetailsImpl userDetails, BuyerCountRequestDto buyerCountRequestDto) {
+    @Transactional
+    public void updateCount(Long postId, UserDetailsImpl userDetails) {
+        Post post = postRepository.findById(postId).orElseThrow(
+                ()->new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+        User user = userDetails.getUser();
+
+        BuyerCount buyerCount1 = new BuyerCount(user, post, 0);
+        BuyerCount buyerCount2 = buyerCountRepository.findByUserAndPost(user,post);
+
+
+        Optional<BuyerCount> countcheck = buyerCountRepository.findByUserAndPostAndBuycount(user,post,1);
+
+        if(!countcheck.isPresent()){
+            buyerCount1.setBuycount(1);
+            buyerCountRepository.save(buyerCount1);
+        }else {
+            buyerCountRepository.delete(buyerCount2);
+        }
+    }
+
+
+
+
+//  게시글- 구매자 count
+//    public void createBuyerCount(Long postId, UserDetailsImpl userDetails) {
 //        Post post = postRepository.findById(postId).orElseThrow(
-//                ()->new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-//        BuyerCount buyerCount = new BuyerCount(userDetails.getUser(),post);
-//        Optional<BuyerCount> countcheck = Optional.ofNullable(
-//                        buyerCountRepository.findByUserAndPostId(userDetails.getUser(),postId,buyerCountRequestDto.getCount())
-//                );
-//        if(countcheck.isPresent()){ //구매 누른상태
-//            buyerCountRepository.deleteByUserAndPostId(buyerCountRequestDto.getCount());
-//        }
-//        buyerCountRepository.save(buyerCount);
+//                ()-> new IllegalArgumentException("게시글이 존재하지 않습니다. ")
+//        );
 //
+//        Optional<BuyerCount> buyerCount = buyerCountRepository.findById(postId);
+//
+//
+//
+//        User user = userDetails.getUser();
+//        BuyerCount newCount = new BuyerCount(user,post);
+//        System.out.println(buyerCount);
+//
+//        buyerCountRepository.save(newCount);
 //    }
 }

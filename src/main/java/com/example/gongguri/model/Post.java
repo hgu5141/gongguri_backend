@@ -45,13 +45,10 @@ public class Post {
     @Column
     private int minimum;
 
-    @Column
-    private int buyercount;
 
-//    @BatchSize(size = 100)
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
-//    private List<BuyerCount> buyerCounts = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    private List<BuyerCount> buyercount = new ArrayList<>();
 
 
 
@@ -80,4 +77,6 @@ public class Post {
         this.title =postRequestDto.getTitle();
         this.content = postRequestDto.getContent();
     }
+
+
 }
