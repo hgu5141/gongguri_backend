@@ -24,6 +24,8 @@ public class CommentController {
     @PostMapping("/api/{postId}/comments")
     public void createComment(@PathVariable Long postId, @RequestBody CommentRequestDto commentRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails){
         commentService.save(postId,userDetails, commentRequestDto);
+
+
     }
 
 //  코멘트 조회
