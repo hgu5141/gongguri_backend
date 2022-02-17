@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -23,6 +25,9 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String nickname;
+
+//    @OneToMany()
+//    private Post post;
 
 
 

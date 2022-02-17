@@ -24,7 +24,6 @@ public class ExceptionController {
                 .body(new RestApiException(builder.toString(), HttpStatus.BAD_REQUEST));
     }
 
-
     @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
     public ResponseEntity<RestApiException> exceptionHandler(Exception e) {
         System.out.println(e.getMessage());

@@ -13,7 +13,6 @@ public class HomeController {
         if (userDetails != null) {
             model.addAttribute("username", userDetails.getUsername());
         }
-
         return "index";
     }
 }

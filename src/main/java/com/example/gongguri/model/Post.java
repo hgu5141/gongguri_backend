@@ -1,11 +1,13 @@
 package com.example.gongguri.model;
 
 
-import com.sparta.gongguri.dto.PostRequestDto;
+import com.example.gongguri.dto.PostRequestDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,10 +34,10 @@ public class Post {
     private String imageUrl;
 
     @Column
-    private String startAt; // 글쓴날짜로 할것인지?
+    private String startAt;
 
     @Column
-    private String endAt; // 마감날짜 지정할지?
+    private String endAt;
 
     @Column
     private int price;
@@ -43,23 +45,35 @@ public class Post {
     @Column
     private int minimum;
 
-    @Column
-    private int buyercount;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    private List<BuyerCount> buyercount = new ArrayList<>();
+
+
+
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
-    public Post(PostRequestDto postRequestDto) {
+
+    @ManyToOne
+    private User user;
+
+    public Post(User user,PostRequestDto postRequestDto) {
+        this.user = user;
         this.content =postRequestDto.getContent();
         this.imageUrl=postRequestDto.getImageUrl();
         this.title=postRequestDto.getTitle();
         this.startAt=postRequestDto.getStartAt();
-        this.endAt=postRequestDto.getStartAt();
+        this.endAt=postRequestDto.getEndAt();
         this.price=postRequestDto.getPrice();
         this.minimum=postRequestDto.getMinimum();
     }
 
-    public void update(PostRequestDto postRequestDto) {
+
+    public void update(User user, PostRequestDto postRequestDto) {
+        this.user =user;
         this.title =postRequestDto.getTitle();
         this.content = postRequestDto.getContent();
     }

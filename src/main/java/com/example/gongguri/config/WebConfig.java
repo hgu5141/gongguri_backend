@@ -23,19 +23,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
+                .allowedOrigins("*")
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .exposedHeaders(HttpHeaders.AUTHORIZATION)
-                .allowCredentials(true)
+//                .allowCredentials(true)
+                .allowCredentials(false)
                 .maxAge(MAX_AGE_SECS);
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/image/**")
-                .addResourceLocations("file:///home/ubuntu/image/");
-//                .addResourceLocations("file:///Users/jeong-yeongbin/Desktop/project/Team-11-Back/src/main/resources/static/image/");
     }
 }

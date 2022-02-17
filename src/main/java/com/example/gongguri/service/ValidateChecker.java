@@ -7,13 +7,13 @@ import com.example.gongguri.security.UserDetailsImpl;
 import java.util.regex.Pattern;
 
 public class ValidateChecker {
-//    public static User userDetailsIsNull(UserDetailsImpl userDetails){
-//        if(userDetails != null){
-//            return userDetails.getUser();
-//        }else{
-//            throw new NullPointerException("유효하지 않은 사용자입니다.");
-//        }
-//    }
+    public static User userDetailsIsNull(UserDetailsImpl userDetails){
+        if(userDetails != null){
+            return userDetails.getUser();
+        }else{
+            throw new NullPointerException("유효하지 않은 사용자입니다.");
+        }
+    }
 
     public static void registerValidCheck(SignupRequestDto signupRequestDto) {
         // 회원 ID 중복 확인
@@ -28,17 +28,5 @@ public class ValidateChecker {
         }else if (!password.equals(passwordcheck)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
-    }
-
-    public static String cleanXSS(String value) {
-        // XSS 방어 구문
-        //You'll need to remove the spaces from the html entities below
-        value = value.replaceAll("<", "＜").replaceAll(">", "＞");
-        value = value.replaceAll("\\(", "（").replaceAll("\\)", "）");
-        value = value.replaceAll("'", "＇");
-        value = value.replaceAll("eval\\((.*)\\)", "");
-        value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "");
-        value = value.replaceAll("script", "");
-        return value;
     }
 }
