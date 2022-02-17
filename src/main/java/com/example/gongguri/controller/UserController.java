@@ -49,7 +49,6 @@ public class UserController {
     public ResponseEntity<String> registerUser(@Valid @RequestBody SignupRequestDto requestDto) {
         System.out.println(requestDto);
         userService.registerUser(requestDto);
-        System.out.println("회원가입 완료");
         return ResponseEntity.ok()
                 .body("회원가입 완료");
     }

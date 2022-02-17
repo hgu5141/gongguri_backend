@@ -34,10 +34,10 @@ public class Post {
     private String imageUrl;
 
     @Column
-    private String startAt; // 글쓴날짜로 할것인지?
+    private String startAt;
 
     @Column
-    private String endAt; // 마감날짜 지정할지?
+    private String endAt;
 
     @Column
     private int price;

@@ -3,9 +3,11 @@ package com.example.gongguri.service;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.example.gongguri.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class S3Uploader {
@@ -21,9 +24,7 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String uploadFiles(MultipartFile multipartFile, String dirName) throws IOException {
-        System.out.println("컨버터 접근" +multipartFile);
-
+    public String uploadFile(MultipartFile multipartFile, String dirName) throws IOException {
         File uploadFile = convert(multipartFile)  // 파일 변환할 수 없으면 에러
                 .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail"));
         return upload(uploadFile, dirName);
@@ -33,13 +34,13 @@ public class S3Uploader {
         System.out.println(uploadFile);
         String fileName = filePath + "/" + UUID.randomUUID() + uploadFile.getName();   // S3에 저장된 파일 이름
         String uploadImageUrl = putS3(uploadFile, fileName); // s3로 업로드
+        String imageUrl = "https://mini-pro.s3.ap-northeast-2.amazonaws.com/static/" + uploadImageUrl;
         removeNewFile(uploadFile);
         return uploadImageUrl;
     }
 
     // S3로 업로드
     private String putS3(File uploadFile, String fileName) {
-        System.out.println(uploadFile);
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
