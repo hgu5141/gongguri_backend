@@ -23,6 +23,7 @@ public class CommentController {
 //    코멘트 작성 - 로그인 되어 있으면 작성가능, 아니면 안됨. void ->
     @PostMapping("/api/{postId}/comments")
     public void createComment(@PathVariable Long postId, @RequestBody CommentRequestDto commentRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails){
+        System.out.println(postId);
         commentService.save(postId,userDetails, commentRequestDto);
     }
 

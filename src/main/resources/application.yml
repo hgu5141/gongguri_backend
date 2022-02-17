@@ -1,0 +1,11 @@
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIARH3RCBGARYOVUQPC
+      secretKey: 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
+    s3:
+      bucket: mini-pro
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
