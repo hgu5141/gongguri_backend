@@ -25,6 +25,8 @@ public class CommentController {
     public void createComment(@PathVariable Long postId, @RequestBody CommentRequestDto commentRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails){
         System.out.println(postId);
         commentService.save(postId,userDetails, commentRequestDto);
+
+
     }
 
 //  코멘트 조회
