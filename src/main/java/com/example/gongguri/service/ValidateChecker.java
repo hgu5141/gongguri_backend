@@ -29,18 +29,4 @@ public class ValidateChecker {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
     }
-
-    public static String cleanXSS(String value) {
-        // XSS 방어 구문
-        //You'll need to remove the spaces from the html entities below
-        value = value.replaceAll("<", "＜").replaceAll(">", "＞");
-        value = value.replaceAll("\\(", "（").replaceAll("\\)", "）");
-        value = value.replaceAll("'", "＇");
-        value = value.replaceAll("eval\\((.*)\\)", "");
-        value = value.replaceAll("[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']", "");
-        value = value.replaceAll("script", "");
-        return value;
-    }
-
-
 }

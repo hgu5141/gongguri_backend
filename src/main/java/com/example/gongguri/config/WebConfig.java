@@ -31,12 +31,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(false)
                 .maxAge(MAX_AGE_SECS);
     }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/image/**")
-                .addResourceLocations("file:///home/ubuntu/image/");
-//                .addResourceLocations("file:///Users/jeong-yeongbin/Desktop/project/Team-11-Back/src/main/resources/static/image/");
-    }
 }

@@ -1,6 +1,5 @@
 package com.example.gongguri.service;
 
-import com.example.gongguri.dto.BuyerCountRequestDto;
 import com.example.gongguri.dto.PostRequestDto;
 import com.example.gongguri.dto.PostResponseDto;
 import com.example.gongguri.model.BuyerCount;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,10 +30,9 @@ public class PostService {
 
 //    게시글 작성
     @Transactional
-    public void createPost(UserDetailsImpl userDetails,PostRequestDto postRequestDto) {
+    public void createPost(UserDetailsImpl userDetails, PostRequestDto postRequestDto) {
         User user = ValidateChecker.userDetailsIsNull(userDetails);
         Post post = new Post(user,postRequestDto);
-
         postRepository.save(post);
     }
 
@@ -43,22 +40,7 @@ public class PostService {
     public List<PostResponseDto> getPosts() {
         List<Post> posts = postRepository.findAll();
         List<PostResponseDto> allPosts = new ArrayList<>();
-//            allPosts.add(result= true);
 
-//        BuyerCount buyerCount = (BuyerCount) buyerCountRepository.findById(post);
-
-//        ArrayList<BuyerCount> arraylist = new ArrayList<>();
-//
-//        int arraylist_size = arraylist.size();
-//        System.out.println( arraylist_size );
-
-//        Member member = new Member();
-//        member.setName("이름");
-//
-//        Member newMember = new Member();
-//// member 의 name 필드를 newMember 에 set
-//        newMember.setName(member.getName());
-//        int size = (int) buyerCountRepository.count();// size
             for (Post post : posts) {
 
                 allPosts.add(new PostResponseDto(
@@ -75,21 +57,15 @@ public class PostService {
                         post.getBuyercount().size()
                 ));
             }
-
-//        String result = "true";
-//        ResultDto resultDto = new ResultDto(result,allPosts);
-//            return (List<PostResponseDto>) resultDto;
-
             return allPosts;
     }
 
-//  게시글 상세 페이지 조회
     public PostResponseDto getPost(Long postId) {
 
         Post post =postRepository.findById(postId).orElseThrow(
                 ()->new IllegalArgumentException( "게시글이 없습니다 ")
         );
-//        boolean result = true;
+
         String username = post.getUser().getUsername();
         String nickname = post.getUser().getNickname();
         String title = post.getTitle();
@@ -119,22 +95,18 @@ public class PostService {
         User user = ValidateChecker.userDetailsIsNull(userDetails);
 
         Optional<Post> post = postRepository.findById(postId);
-//        if(!post.isPresent()) {
-//            throw  new IllegalArgumentException("게시물을 찾을 수 없습니다.");
-//        }
-//        if(!user.getUserid().equals(post.get().getUser().getUserid())){
-//            throw new IllegalArgumentException("해당 게시글을 삭제하실 권한이 없습니다.");
-//        }
 
         if (post.isPresent() && user.getUserid().equals(post.get().getUser().getUserid()) ) {
             this.postRepository.delete(post.get());
             return true;
         }
-//        if(!user.getUserid().equals(post.get().getUser().getUserid())){
-////            throw new IllegalArgumentException("해당 게시글을 삭제하실 권한이 없습니다.");
-////        }
 
-//        postRepository.deleteById(postId);
+//      처리 불가시 주석 처리
+//        if(!user.getUserid().equals(post.get().getUser().getUserid())){
+//            throw new IllegalArgumentException("해당 게시글을 삭제하실 권한이 없습니다.");
+//        }
+
+        postRepository.deleteById(postId);
         return false;
     }
 

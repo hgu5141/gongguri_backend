@@ -25,8 +25,6 @@ public class CommentController {
     public void createComment(@PathVariable Long postId, @RequestBody CommentRequestDto commentRequestDto,@AuthenticationPrincipal UserDetailsImpl userDetails){
         System.out.println(postId);
         commentService.save(postId,userDetails, commentRequestDto);
-
-
     }
 
 //  코멘트 조회
@@ -45,25 +43,13 @@ public class CommentController {
             if (isDelete) {
                 return ResponseEntity.ok("success");
             }else {
-                return ResponseEntity.badRequest().body("can't find entity");
+                return ResponseEntity.badRequest().body("코멘트를 삭제하였습니다.");
             }
         }catch(Exception ex) {
-            return ResponseEntity.badRequest().body("Invalid Parameter");
+            return ResponseEntity.badRequest().body("존재하지 않는 코멘트입니다.");
         }
-
-
     }
 
-
-//    @PostMapping("/api/comments")
-//    public void createComment(@RequestBody CommentRequestDto commentRequestDto){
-//        commentService.createComment(commentRequestDto);
-//    }
-//
-//    @GetMapping("/api/reply/{postId}")
-//    public List<Comment> getComment(@PathVariable Long postId){
-//        return CommentService.getComment(postId);
-//    }
 
 
 

@@ -11,7 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostResponseDto {
 
-
     private Long postId;
     private String username;
     private String nickname;
@@ -23,8 +22,5 @@ public class PostResponseDto {
     private int price;
     private int minimum;
     private int buyercount;
-//    private int count;
-
-
 
 }

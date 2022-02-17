@@ -66,19 +66,7 @@ public class CommentService {
             return true;
         }
 
-//        commentRepository.deleteById(commentId);
         return false;
     }
-
-
-//    public Comment createComment(CommentRequestDto commentRequestDto) {
-//        Comment comment = new Comment(commentRequestDto);
-//        commentRepository.save(comment);
-//        return comment;
-//    }
-//
-//    public List<Comment> getComment(Long postId)   {
-//        return CommentRepository.findAllByPostid(postId);
-//    }
 
 }
